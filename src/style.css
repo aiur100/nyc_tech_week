@@ -201,6 +201,9 @@ body {
 .card h3 { font-size: clamp(17px, 4.4vw, 21px); font-weight: 700; letter-spacing: -0.3px; color: var(--ink); }
 .meta { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 8px 0 12px; font-size: 12px; color: var(--mute); }
 .meta b { color: var(--peri); font-weight: 500; }
+.map-link { color: var(--cyan); font-weight: 500; text-decoration: none; border-bottom: 1px dotted rgba(45, 226, 230, 0.5); }
+.map-link:hover { border-bottom-style: solid; }
+.map-link .arr { font-size: 10px; }
 .desc { font-size: 14px; color: #b7b4d6; }
 
 .rsvp {

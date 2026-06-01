@@ -45,7 +45,7 @@ const DAYS = [
         title: 'The Exit Breakfast',
         tag: 'founders',
         host: 'L40 · Pygma · Colectivo',
-        venue: 'SoHo',
+        venue: 'Dante Aperitivo, 51 Bank St',
         desc: 'Invite-only breakfast for founders navigating the exit. Honest talk on acquisitions, IPOs, secondaries & strategic deals — no pitches, no keynotes.',
         url: 'https://partiful.com/e/GWxdINK4i24WU6zh9TCU',
       },
@@ -56,7 +56,7 @@ const DAYS = [
         title: 'Founders & Investors Afternoon Mixer',
         tag: 'networking',
         host: 'Comp AI',
-        venue: 'TBA',
+        venue: 'Somewhere Nowhere, 112 W 25th St',
         desc: 'No agenda. Just IRL connecting with other smart people. Founders & investors hang, get to know each other.',
         url: 'https://partiful.com/e/nNJ80KODX1rqDJbIKCln',
       },
@@ -103,6 +103,12 @@ const TAG_LABELS = {
 
 // ─── Render ──────────────────────────────────────────────────────────────────
 const totalEvents = DAYS.reduce((n, d) => n + d.events.length, 0);
+
+// Cross-platform maps link: opens Google Maps on Android, hands off to
+// Apple/Google Maps on iOS. Skips placeholder venues like "TBA".
+const mapsUrl = (venue) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue + ', New York, NY')}`;
+const isMappable = (venue) => venue && venue.toUpperCase() !== 'TBA';
 
 const app = document.getElementById('app');
 app.innerHTML = `
@@ -165,7 +171,11 @@ app.innerHTML = `
               <h3>${e.title}</h3>
               <p class="meta">
                 <span>host: <b>${e.host}</b></span>
-                <span>loc: <b>${e.venue}</b></span>
+                <span>loc: ${
+                  isMappable(e.venue)
+                    ? `<a class="map-link" href="${mapsUrl(e.venue)}" target="_blank" rel="noopener">${e.venue} <span class="arr">↗</span></a>`
+                    : `<b>${e.venue}</b>`
+                }</span>
               </p>
               <p class="desc">${e.desc}</p>
               <a class="rsvp" href="${e.url}" target="_blank" rel="noopener">
