@@ -93,53 +93,64 @@ const totalEvents = DAYS.reduce((n, d) => n + d.events.length, 0);
 
 const app = document.getElementById('app');
 app.innerHTML = `
-  <header class="hero">
-    <div class="hero-bar">
-      <img src="/logo.png" class="logo" alt="Pasley Hill" />
-      <span class="brand">PASLEY&nbsp;HILL<span class="brand-llc">LLC</span></span>
-      <span class="status"><span class="dot"></span>${totalEvents} events locked</span>
+  <div class="term">
+    <div class="term-bar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="tb-title">pasleyhill@nyc-tech-week:&nbsp;~/itinerary</span>
+      <span class="tb-online"><span class="dot"></span>ONLINE</span>
     </div>
-    <h1 class="title">
-      <span class="title-line">NYC&nbsp;TECH&nbsp;WEEK</span>
-      <span class="title-line accent">'26 ITINERARY</span>
-    </h1>
-    <p class="subtitle"><span class="prompt">~/nyc-tech-week $</span> <span id="typed"></span><span class="caret">█</span></p>
-    <nav class="day-nav">
-      ${DAYS.map(
-        (d) => `<a href="#${d.id}" class="day-pill"><b>${d.label}</b> ${d.date}</a>`
-      ).join('')}
-    </nav>
-  </header>
+
+    <header class="hero">
+      <div class="hero-id">
+        <img src="/logo.png" class="logo" alt="Pasley Hill" />
+        <span class="brand">PASLEY_HILL<span class="brand-llc">LLC</span></span>
+      </div>
+      <h1 class="title">NYC_TECH_WEEK<span class="accent">_'26</span></h1>
+      <p class="subtitle"><span class="prompt">$</span> <span id="typed"></span><span class="caret">█</span></p>
+
+      <div class="readout">
+        <span><b>${totalEvents}</b> EVENTS</span>
+        <span><b>${DAYS.length}</b> DAYS</span>
+        <span><b>0</b> FOMO</span>
+        <span class="rd-loc">// NEW YORK CITY</span>
+      </div>
+
+      <nav class="day-nav">
+        ${DAYS.map(
+          (d) => `<a href="#${d.id}" class="day-pill"><b>${d.label}</b>:${d.date}</a>`
+        ).join('')}
+      </nav>
+    </header>
+  </div>
 
   <main class="timeline">
     ${DAYS.map(
-      (d) => `
+      (d, di) => `
       <section class="day" id="${d.id}">
         <div class="day-head reveal">
-          <span class="day-index">${d.label.toUpperCase()}</span>
+          <span class="day-index">DAY_0${di + 1}</span>
           <h2>${d.full}</h2>
-          <span class="day-count">${d.events.length} stop${d.events.length > 1 ? 's' : ''}</span>
+          <span class="day-count">[ ${d.events.length} stop${d.events.length > 1 ? 's' : ''} ]</span>
         </div>
         ${d.events
           .map(
             (e) => `
           <article class="event reveal" data-tag="${e.tag}">
-            <div class="node"></div>
-            <div class="time">
-              <span class="t">${e.time}</span>
-              <span class="m">${e.meridiem}</span>
-              ${e.end ? `<span class="til">→ ${e.end}</span>` : ''}
-            </div>
+            <span class="node"></span>
             <div class="card">
-              <div class="card-top">
+              <div class="card-head">
+                <span class="time">${e.time}<small>${e.meridiem}</small></span>
+                ${e.end ? `<span class="dur">→ ${e.end}</span>` : ''}
                 <span class="tag tag-${e.tag}">${TAG_LABELS[e.tag]}</span>
-                <span class="venue">📍 ${e.venue}</span>
               </div>
               <h3>${e.title}</h3>
-              <p class="host">hosted by <b>${e.host}</b></p>
+              <p class="meta">
+                <span>host: <b>${e.host}</b></span>
+                <span>loc: <b>${e.venue}</b></span>
+              </p>
               <p class="desc">${e.desc}</p>
               <a class="rsvp" href="${e.url}" target="_blank" rel="noopener">
-                view on partiful <span class="arr">↗</span>
+                ./rsvp --partiful <span class="arr">↗</span>
               </a>
             </div>
           </article>`
@@ -150,7 +161,7 @@ app.innerHTML = `
   </main>
 
   <footer class="foot">
-    <img src="/logo.png" class="foot-logo" alt="" />
+    <p class="foot-cmd"><span class="prompt">$</span> exit</p>
     <p>Built by <b>Pasley Hill LLC</b> — AI-native software development.</p>
     <p class="muted">See you out there. Find us at the after-parties.</p>
   </footer>
@@ -199,15 +210,6 @@ const io = new IntersectionObserver(
 document.querySelectorAll('.reveal').forEach((el, i) => {
   el.style.setProperty('--d', `${(i % 4) * 80}ms`);
   io.observe(el);
-});
-
-// ─── Pointer glow on cards ─────────────────────────────────────────────────--
-document.querySelectorAll('.card').forEach((card) => {
-  card.addEventListener('pointermove', (ev) => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', `${ev.clientX - r.left}px`);
-    card.style.setProperty('--my', `${ev.clientY - r.top}px`);
-  });
 });
 
 // ─── Active day pill on scroll ─────────────────────────────────────────────--
