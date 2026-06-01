@@ -13,8 +13,11 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 
 const HUD_LINES = [
   'initializing optical sensor',
+  'calibrating depth field .. OK',
   'face geometry ............ LOCKED',
+  'micro-expression scan .... STABLE',
   'liveness check ........... PASS',
+  'pulse oximetry ........... 72 BPM',
   'carbon signature ......... DETECTED',
   'bot probability .......... 0.02%',
   'verifying humanity',
@@ -59,6 +62,11 @@ gate.innerHTML = `
           <span class="bracket tl"></span><span class="bracket tr"></span>
           <span class="bracket bl"></span><span class="bracket br"></span>
           <span class="crosshair" aria-hidden="true"></span>
+          <div class="cam-brand" aria-hidden="true">
+            <img src="/logo.png" class="cam-logo" alt="" />
+            <span class="cam-x">×</span>
+            <img src="/niuro.svg" class="cam-niuro" alt="" />
+          </div>
         </div>
         <pre class="hud" aria-live="polite"></pre>
         <div class="bar"><span class="bar-fill"></span></div>
@@ -147,13 +155,13 @@ function runHud() {
     if (li < HUD_LINES.length) {
       hud.textContent += (li ? '\n' : '') + '> ' + HUD_LINES[li] + (li < HUD_LINES.length - 1 ? ' ✓' : '…');
       li++;
-      setTimeout(step, reduceMotion ? 0 : 520);
+      setTimeout(step, reduceMotion ? 0 : 720);
     }
   };
   step();
 
   let p = 0;
-  const dur = reduceMotion ? 1 : 3400;
+  const dur = reduceMotion ? 1 : 6600;
   const start = performance.now();
   const tickBar = (now) => {
     p = Math.min(100, Math.round(((now - start) / dur) * 100));
