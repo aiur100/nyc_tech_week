@@ -104,7 +104,12 @@ app.innerHTML = `
       <div class="hero-id">
         <img src="/logo.png" class="logo" alt="Pasley Hill" />
         <span class="brand">PASLEY_HILL<span class="brand-llc">LLC</span></span>
+        <span class="x-join">×</span>
+        <a class="partner" href="https://niuro.io" target="_blank" rel="noopener" aria-label="Niuro">
+          <img src="/niuro.svg" class="niuro-logo" alt="Niuro" />
+        </a>
       </div>
+      <p class="partner-note"><span class="prompt">$</span> partners --field niuro.io <span class="ok">// rolling together</span></p>
       <h1 class="title">NYC_TECH_WEEK<span class="accent">_'26</span></h1>
       <p class="subtitle"><span class="prompt">$</span> <span id="typed"></span><span class="caret">█</span></p>
 
