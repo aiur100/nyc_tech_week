@@ -105,7 +105,7 @@ body {
   text-shadow: 2px 0 var(--pink), -2px 0 var(--cyan);
   animation: glitch 6s infinite;
 }
-.title .accent { color: var(--violet); }
+.title .accent { color: var(--violet); white-space: nowrap; }
 @keyframes glitch {
   0%, 92%, 100% { text-shadow: 2px 0 var(--pink), -2px 0 var(--cyan); }
   93% { text-shadow: -2px 0 var(--pink), 2px 0 var(--cyan); transform: translateX(1px); }
