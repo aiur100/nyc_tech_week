@@ -74,7 +74,7 @@ body {
 .dots i:nth-child(1) { background: var(--pink); }
 .dots i:nth-child(2) { background: var(--amber); }
 .dots i:nth-child(3) { background: var(--green); }
-.tb-title { color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tb-title { color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
 .tb-online {
   margin-left: auto; display: flex; align-items: center; gap: 6px;
   color: var(--green); letter-spacing: 1px; font-size: 11px; flex-shrink: 0;
@@ -244,9 +244,12 @@ html.gate-locked { overflow: hidden; }
 
 .gate {
   position: fixed; inset: 0; z-index: 100000;
-  /* grid + margin:auto on the child = centered when it fits, scrollable when it doesn't */
-  display: grid; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  /* minmax(0,1fr) column = exactly container width (an auto track would grow to the
+     paragraph's max-content and blow the panel past the viewport). safe center =
+     vertically centered when it fits, top-aligned + scrollable when it doesn't. */
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  justify-items: center; align-content: safe center;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
   padding:
     max(18px, env(safe-area-inset-top))
     max(18px, env(safe-area-inset-right))
@@ -267,7 +270,7 @@ html.gate-locked { overflow: hidden; }
 }
 
 .gate-panel {
-  position: relative; width: min(440px, 100%); margin: auto;
+  position: relative; width: min(440px, 100%);
   border: 1px solid var(--line); background: var(--panel);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 24px 70px rgba(0, 0, 0, 0.7);
 }
