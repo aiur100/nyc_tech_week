@@ -18,6 +18,23 @@ npm run build    # outputs to dist/
 npm run preview  # preview the production build
 ```
 
+## Deploy
+
+The site is hosted at **https://nyctechweek.pasleyhill.com** (S3 + CloudFront).
+
+```bash
+npm run build    # build first — deploy.sh deploys dist/
+./deploy.sh
+```
+
+`deploy.sh` syncs `dist/` to S3 (long-cache for hashed assets, `no-cache` for HTML) and invalidates the CloudFront distribution.
+
+Requirements:
+- **AWS CLI v2** installed and on `PATH`.
+- An AWS CLI profile named **`pasley_hill`** (`aws configure --profile pasley_hill`) with permissions for:
+  - `s3:*` on bucket `nyctechweek-pasleyhill-com`
+  - `cloudfront:CreateInvalidation` on distribution `E2ZR1G8UFUHIO4`
+
 ## Structure
 
 ```

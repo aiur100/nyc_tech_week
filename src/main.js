@@ -1,4 +1,5 @@
 import './style.css';
+import './gate.js';
 
 // ─── Itinerary data ──────────────────────────────────────────────────────────
 const DAYS = [
