@@ -5,10 +5,14 @@ set -euo pipefail
 PROFILE=pasley_hill
 BUCKET=nyctechweek-pasleyhill-com
 DISTRIBUTION_ID=E2ZR1G8UFUHIO4
-DIST_DIR="$(cd "$(dirname "$0")" && pwd)/dist"
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+DIST_DIR="$ROOT_DIR/dist"
+
+echo "Building dist/ ..."
+npm --prefix "$ROOT_DIR" run build
 
 if [ ! -d "$DIST_DIR" ]; then
-  echo "dist/ not found at $DIST_DIR — run the build first." >&2
+  echo "dist/ not found at $DIST_DIR — build failed?" >&2
   exit 1
 fi
 
