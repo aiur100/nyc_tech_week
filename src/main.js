@@ -10,12 +10,24 @@ const DAYS = [
     full: 'Monday, June 1',
     events: [
       {
+        time: '9:00',
+        meridiem: 'AM',
+        end: '12:00 PM',
+        title: 'NYTW Kickoff Networking Breakfast',
+        tag: 'networking',
+        host: 'XLAI',
+        venue: 'Gelatoville, 692 9th Ave',
+        desc: 'Come for the coffee, stay for the connections. Curated morning gathering for founders, operators, engineers & builders in AI/tech, plus future-of-work investors. No agenda, no panels — just good conversation. Flow in and out as your schedule allows.',
+        url: 'https://partiful.com/e/EbLHvoBrSl7ZV6xScsgz',
+      },
+      {
         time: '10:00',
         meridiem: 'AM',
         title: 'ATTAP Vibeathon & Agentathon',
         tag: 'hackathon',
+        maybe: true,
         host: 'Eventide × Dreamy',
-        venue: 'TBA',
+        venue: '873 Broadway, Suite 410',
         desc: 'Hands-on with leading LLMs + the ATTAP.ai platform. Build no-code, no-prompt "Vibes" for hyper-personalized workflows. Cutting through the hype to what actually ships.',
         url: 'https://partiful.com/e/GmOIWn5hMegxDT7gDfTX',
       },
@@ -148,6 +160,7 @@ app.innerHTML = `
                 <span class="time">${e.time}<small>${e.meridiem}</small></span>
                 ${e.end ? `<span class="dur">→ ${e.end}</span>` : ''}
                 <span class="tag tag-${e.tag}">${TAG_LABELS[e.tag]}</span>
+                ${e.maybe ? `<span class="tag tag-maybe">? maybe</span>` : ''}
               </div>
               <h3>${e.title}</h3>
               <p class="meta">
@@ -177,7 +190,7 @@ app.innerHTML = `
 const phrases = [
   'plan --week=nyc-tech-2026',
   'load itinerary.json ✓',
-  '5 events · 3 days · 0 FOMO',
+  '6 events · 3 days · 0 FOMO',
 ];
 const typed = document.getElementById('typed');
 let pi = 0,
